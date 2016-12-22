@@ -1,0 +1,148 @@
+*bepo.txt*  Plugin pour faciliter la gestion du bépo sous vim
+
+Author:  Ergodis <http://bepo.fr/>
+License: Same terms as Vim itself (see |license|)
+
+This plugin aims to handle a french ergonomic layout called "bépo".
+
+As this plugin mainly concern french users, documentation is vritten in
+french.
+
+
+========================================================================
+
+INTRODUCTION                                                *bépo*
+
+Ce plugin propose différentes solutions pour utiliser au mieux vim avec une disposition bépo. Elles sont plus ou moins intrusives.
+
+Deux options sont également proposées pour lever l'ambiguité induite par
+certains caractères invisibles tels que les espaces insécables.
+
+Ce plugin présuppose que l'OS est en disposition bépo.~
+
+Les paramétrages proposés sont essentiellement ceux proposés sur la page
+bepo.fr/wiki/Vim. 
+
+-----------------------------------------------------------------------------
+Paramètres                                                *paramètres*
+
+Ce plugin utilise les paramètres suivants :
+   |g:bepo_permut_w| - accessibilité aux touches de mouvement
+   |g:bepo_permut_maj_numb| - acces direct aux chiffres
+   |g:bepo_map_azerty| - le mode normal est en azerty
+   |g:bepo_map_qwerty| - le mode normal est en qwerty
+   |g:bepo_color_nbsp| - colorisation des espaces insécables
+   |g:bepo_disp_hidden| - mise en évidence des caractères transparents
+
+-----------------------------------------------------------------------------
+Activation                                                 *BepoInit()*
+
+Dans le fichier .vimrc, après la définition des paramètres, il faut appeler
+la fonction |BepoInit()| pour activer le plugin.
+
+Pour que l'appel ne remonte pas d'erreur, il faut le lancer de la façon
+suivante :
+    autocmd BufReadPost * call BepoInit() 
+
+conserver les mouvements naturels de vim.
+
+    let g:bepo_permut_w = 0
+
+    let g:bepo_permut_maj_numb = 0
+    let g:bepo_map_bepo_qwerty = 0
+    let g:bepo_map_bepo_azerty = 0
+    let g:bepo_color_nbsp = 0
+    let g:bepo_disp_hidden = 0
+
+  endif
+
+-----------------------------------------------------------------------------
+Accès aux touches de mouvements                         *g:bepo_permut_w*
+                                                            *BepoPermutW*
+L'idée de cette option est de modifier au minimum les touches en mode normal
+pour pouvoir utiliser les touches normales de déplacement de vim (hijk en
+azerty).
+
+Les principales modifications sont :
+  - on remappe W sur É ;
+  - corollaire, on remplace les text objects aw, aW, iw et iW pour effacer/remplacer un mot quand on n’est pas au début (daé / laé) ;
+  - pour faciliter les manipulations de fenêtres, on utilise {W} comme un Ctrl+W ;
+  - [HJKL] -> {CTSR} ;
+  - {HJKL} <- [CTSR] ;
+  - désambiguation de {g} ;
+  - <> en direct ;
+  - remaper la gestion des fenêtres.
+
+TODO : détailler éventuellement ici les modifications effectueés.
+
+Pour activer cette option, placer les lignes suivantes dans le fichier |.vimrc| :
+    let g:bepo_permut_w = 1
+    autocmd BufReadPost * call BepoInit() 
+
+Il est également possible de lancer manuellement la commande :
+    :BepoPermutW ~
+
+-----------------------------------------------------------------------------
+Chiffres en accès direct                             *g:bepo_permut_maj_numb*
+                                                        *BepoPermutMajNumb*
+Cette option est complémentaire de l'option précédente. Il s'agit, en mode normal, de mettre les chiffres en accès direct.
+
+Pour activer cette option, placer les lignes suivantes dans le fichier |.vimrc| :
+    let g:bepo_permut_maj_numb = 1
+    autocmd BufReadPost * call BepoInit() 
+
+Il est également possible de lancer manuellement la commande :
+    :BepoPermutMajNumb ~
+
+----------------------------------------------------------------------------
+Mode normal en azerty                                  *g:bepo_map_azerty*
+                                                            *BepoMapAzerty*
+
+Pour que l'azerty soit actif pour le mode normal, placer les lignes suivantes dans le fichier |.vimrc| :
+    let g:bepo_map_azerty = 1
+    autocmd BufReadPost * call BepoInit() 
+
+Il est également possible de lancer manuellement la commande :
+    :BepoMapAzerty ~
+
+-----------------------------------------------------------------------------
+Mode normal en qwerty                                  *g:bepo_map_qwerty*
+                                                            *BepoMapQwerty*
+
+Pour que le qwerty soit actif pour le mode normal, placer les lignes suivantes dans le fichier |.vimrc| :
+    let g:bepo_map_qwerty = 1
+    autocmd BufReadPost * call BepoInit() 
+
+Il est également possible de lancer manuellement la commande :
+    :BepoMapQwerty ~
+
+-----------------------------------------------------------------------------
+Colorisation des epaces insécables                         *g:bepo_color_nbsp*
+                                                           *BepoColorNbsp*
+Le bépo, en rendant facilement accessible les espaces insécables ce qui peut entrainer quelques désagréments lors de la saisie de code.
+
+Cette fonction permet de mettre en valeur les espaces insécables. 
+
+Pour activer cette option, placer les lignes suivantes dans le fichier |.vimrc| :
+
+    let g:bepo_color_nbsp = 1 " (défaut 0)
+    autocmd BufReadPost * call BepoInit() 
+
+Il est également possible de lancer manuellement la commande :
+    :BepoColorNbsp ~
+
+-----------------------------------------------------------------------------
+Affichage des caratères transparents                        *g:bepo_disp_hidden*
+                                                            *BepoDispHidden*
+function! s:bepo_disp_hidden() 
+Cette fonction permet de révéler les caractères invisibles.
+
+Pour l'activer cette option, placer la ligne suivante dans le fichier |.vimrc| :
+
+    let g:bepo_disp_hidden = 1 " (défaut 0)
+    autocmd BufReadPost * call BepoInit() 
+
+Il est également possible de lancer manuellement la commande :
+    :BepoDispHidden ~
+
+
