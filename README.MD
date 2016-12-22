@@ -14,7 +14,7 @@ Installation
 L'installation automatique a été testée avec vim-Plug.
 Placer dans le .vimrc:
 
-    Plug 'ergodis/vim-bepo'
+    Plug 'Ergodis/vim-bepo'
 
 puis exécuter les commandes 
 
